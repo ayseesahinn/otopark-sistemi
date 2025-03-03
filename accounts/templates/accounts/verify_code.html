@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Doğrulama Kodu</h2>
+  <form method="post">
+    {% csrf_token %}
+    <label for="code">Kod:</label>
+    <input type="text" name="code" required>
+    <button type="submit">Doğrula</button>
+  </form>
+{% endblock %}
