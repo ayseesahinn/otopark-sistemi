@@ -9,7 +9,7 @@ from django.conf import settings
 from django.contrib.auth.forms import AuthenticationForm  # AuthenticationForm'u import edin
 from .forms import RegisterForm
 from .models import Profile
-
+from django.contrib.auth.forms import UserCreationForm
 
 User = get_user_model()
 
@@ -94,3 +94,16 @@ def password_reset_confirm(request, uidb64, token):
         return render(request, 'accounts/password_reset_confirm.html')
     else:
         return HttpResponse('Geçersiz kod.', status=400)
+    
+def signup(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("login")  # Kayıt başarılıysa giriş sayfasına yönlendir
+    else:
+        form = UserCreationForm()
+    return render(request, "registration/signup.html", {"form": form})
+
+def index(request):
+    return render(request, 'accounts/index.html')
