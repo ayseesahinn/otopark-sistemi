@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="login-container">
+    <h2>Otopark Sistemine Giriş Yap</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="login-button">Giriş Yap</button>
+    </form>
+    <p>Hesabınız yok mu? <a href="{% url 'register' %}">Kayıt Ol</a></p>
+</div>
+{% endblock %}
+
