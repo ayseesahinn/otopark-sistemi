@@ -107,3 +107,164 @@ def signup(request):
 
 def index(request):
     return render(request, 'accounts/index.html')
+    # views.py
+from django.shortcuts import render, redirect
+from .forms import ParkingForm, ReservationForm
+from .models import Parking, Reservation, Review
+
+# Satıcı paneli: Otopark ekleme
+def seller_dashboard(request):
+    if request.user.user_type != 'satıcı':
+        return redirect('home')  # Eğer kullanıcı satıcı değilse, ana sayfaya yönlendir
+    
+    if request.method == 'POST':
+        form = ParkingForm(request.POST)
+        if form.is_valid():
+            new_parking = form.save(commit=False)
+            new_parking.satıcı = request.user
+            new_parking.save()
+            return redirect('seller_dashboard')  # Otopark başarıyla eklenirse satıcı paneline geri dön
+    
+    else:
+        form = ParkingForm()
+
+    return render(request, 'seller_dashboard.html', {'form': form})
+
+# Alıcı paneli: Rezervasyon yapma
+def make_reservation(request, parking_id):
+    parking = Parking.objects.get(id=parking_id)
+    if request.method == 'POST':
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.alıcı = request.user
+            reservation.otopark = parking
+            reservation.save()
+            return redirect('reservation_details', reservation_id=reservation.id)
+    else:
+        form = ReservationForm()
+
+    return render(request, 'make_reservation.html', {'form': form, 'parking': parking})
+
+# views.py
+from django.shortcuts import render, redirect
+from .forms import ParkingForm, ReservationForm
+from .models import Parking, Reservation, Review
+
+# Satıcı paneli: Otopark ekleme
+def seller_dashboard(request):
+    if request.user.user_type != 'satıcı':
+        return redirect('home')  # Eğer kullanıcı satıcı değilse, ana sayfaya yönlendir
+    
+    if request.method == 'POST':
+        form = ParkingForm(request.POST)
+        if form.is_valid():
+            new_parking = form.save(commit=False)
+            new_parking.satıcı = request.user
+            new_parking.save()
+            return redirect('seller_dashboard')  # Otopark başarıyla eklenirse satıcı paneline geri dön
+    
+    else:
+        form = ParkingForm()
+
+    return render(request, 'seller_dashboard.html', {'form': form})
+
+# Alıcı paneli: Rezervasyon yapma
+def make_reservation(request, parking_id):
+    parking = Parking.objects.get(id=parking_id)
+    if request.method == 'POST':
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.alıcı = request.user
+            reservation.otopark = parking
+            reservation.save()
+            return redirect('reservation_details', reservation_id=reservation.id)
+    else:
+        form = ReservationForm()
+
+    return render(request, 'make_reservation.html', {'form': form, 'parking': parking})
+
+from django.shortcuts import render, redirect
+from .forms import ParkingForm, ReservationForm
+from .models import Parking, Reservation, Review
+
+# Satıcı paneli: Otopark ekleme
+def seller_dashboard(request):
+    if request.user.user_type != 'satıcı':
+        return redirect('home')  # Eğer kullanıcı satıcı değilse, ana sayfaya yönlendir
+    
+    if request.method == 'POST':
+        form = ParkingForm(request.POST)
+        if form.is_valid():
+            new_parking = form.save(commit=False)
+            new_parking.satıcı = request.user
+            new_parking.save()
+            return redirect('seller_dashboard')  # Otopark başarıyla eklenirse satıcı paneline geri dön
+    
+    else:
+        form = ParkingForm()
+
+    return render(request, 'seller_dashboard.html', {'form': form})
+
+# Alıcı paneli: Rezervasyon yapma
+def make_reservation(request, parking_id):
+    parking = Parking.objects.get(id=parking_id)
+    if request.method == 'POST':
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.alıcı = request.user
+            reservation.otopark = parking
+            reservation.save()
+            return redirect('reservation_details', reservation_id=reservation.id)
+    else:
+        form = ReservationForm()
+
+    return render(request, 'make_reservation.html', {'form': form, 'parking': parking})
+   
+# Satıcı paneli: Otopark ekleme
+def seller_dashboard(request):
+    if request.user.user_type != 'satıcı':
+        return redirect('home')  # Eğer kullanıcı satıcı değilse, ana sayfaya yönlendir
+    
+    if request.method == 'POST':
+        form = ParkingForm(request.POST)
+        if form.is_valid():
+            new_parking = form.save(commit=False)
+            new_parking.satıcı = request.user
+            new_parking.save()
+            return redirect('seller_dashboard')  # Otopark başarıyla eklenirse satıcı paneline geri dön
+    
+    else:
+        form = ParkingForm()
+
+    return render(request, 'seller_dashboard.html', {'form': form})
+# Alıcı paneli: Rezervasyon yapma
+def make_reservation(request, parking_id):
+    parking = Parking.objects.get(id=parking_id)
+    if request.method == 'POST':
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            reservation.alıcı = request.user
+            reservation.otopark = parking
+            reservation.save()
+            return redirect('reservation_details', reservation_id=reservation.id)
+    else:
+        form = ReservationForm()
+
+    return render(request, 'make_reservation.html', {'form': form, 'parking': parking})
+# Yorum yapma ve puanlama
+def leave_review(request, reservation_id):
+    reservation = Reservation.objects.get(id=reservation_id)
+    if request.method == 'POST':
+        rating = request.POST.get('rating')
+        comment = request.POST.get('comment')
+        review = Review(reservation=reservation, rating=rating, comment=comment)
+        review.save()
+        return redirect('reservation_details', reservation_id=reservation.id)
+    
+    return render(request, 'leave_review.html', {'reservation': reservation})
+
+
