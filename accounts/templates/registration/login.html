@@ -3,11 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Ana Sayfa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff; /* Arka plan rengi */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Yüksekliği ekranın tamamına ayarlıyoruz */
+            color: #333; /* Varsayılan metin rengi */
+        }
+        .container {
+            text-align: center;
+            background-color: #fff; /* İçeriğin arka planı beyaz */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 500px;
+        }
+        h1 {
+            color: #2c3e50; /* Başlık rengi */
+            font-size: 36px;
+        }
+        h1 span {
+            color: #2980b9; /* Kullanıcı adı rengini farklı yapalım */
+        }
+        .links a {
+            color: #007BFF; /* Linklerin rengi */
+            text-decoration: none;
+            margin: 0 10px;
+            font-size: 16px;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>Merhaba</h1>  <!-- Kullanıcı adı gösterilir -->
-    <a href="{% url 'login' %}">Giriş Yap</a> |
-    <a href="{% url 'register' %}">Kayıt Ol</a> |
-    <a href="{% url 'password_reset' %}">Şifremi Unuttum</a>
+    <div class="container">
+        <h1>
+            Merhaba! 
+            {% if user.is_authenticated %}
+                <span>Hoş geldiniz, {{ user.username }}!</span> <!-- Giriş yapan kullanıcı adı -->
+            {% else %}
+                <span>Hoş geldiniz, Ziyaretçi!</span> <!-- Ziyaretçi mesajı -->
+            {% endif %}
+        </h1>
+
+        <div class="links">
+            <a href="{% url 'login' %}">Giriş Yap</a> |
+            <a href="{% url 'register' %}">Kayıt Ol</a> |
+            <a href="{% url 'password_reset' %}">Şifremi Unuttum</a>
+        </div>
+    </div>
 </body>
 </html>
+
