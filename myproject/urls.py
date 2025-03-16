@@ -16,10 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from accounts import views  # accounts uygulamanızın views'ını import edin
+from accounts import views # type: ignore
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),  # Admin URL'si
-    path('', views.home, name='home'),  # Ana sayfa URL'si
-    path('accounts/', include('accounts.urls')),  # Diğer auth URL'leri
+    path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),  # Giriş, çıkış, şifre sıfırlama için
+    path('signup/', views.signup, name='signup'),  # Kayıt olma sayfası için
+    path('', include('accounts.urls')),  # accounts uygulamasının URL'lerini dahil et
 ]
