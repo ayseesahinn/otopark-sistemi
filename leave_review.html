@@ -1,0 +1,9 @@
+<h2>{{ reservation.otopark.name }} - Yorum Yap</h2>
+<form method="post">
+    {% csrf_token %}
+    <label for="rating">Puan:</label>
+    <input type="number" name="rating" min="1" max="5">
+    <label for="comment">Yorum:</label>
+    <textarea name="comment"></textarea>
+    <button type="submit">Yorum Gönder</button>
+</form>
