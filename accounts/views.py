@@ -161,4 +161,9 @@ def leave_review(request, reservation_id):
     
     return render(request, 'leave_review.html', {'reservation': reservation})
 
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def dashboard(request):
+    return render(request, 'accounts/dashboard.html')
 
