@@ -15,3 +15,9 @@ urlpatterns = [
     path('password_reset_confirm/<uidb64>/<token>/', views.password_reset_confirm, name='password_reset_confirm'),
     path('admin/', admin.site.urls),
 ]
+urlpatterns = [
+    path('seller_dashboard/', views.seller_dashboard, name='seller_dashboard'),
+    path('reservation/<int:parking_id>/', views.make_reservation, name='make_reservation'),
+    path('review/<int:reservation_id>/', views.leave_review, name='leave_review'),
+]
+
